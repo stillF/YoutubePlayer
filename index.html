@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stillF&nbsp;-&nbsp;Youtube播放</title>
+    <link rel="stylesheet" href="/YoutubePlayer/css/pure-min.css">
+    <link rel="stylesheet" href="/YoutubePlayer/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="/YoutubePlayer/css/styles.css">
+    <script type="text/javascript" src="/YoutubePlayer/js/vue-min.js"></script>
+    <script type="text/javascript" src="/YoutubePlayer/js/youtube-api.js"></script>
+</head>
+<body style="background-color:#2d3e50;">
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed" style="background: #111;">
+            <a class="pure-menu-heading" href="https://stillf.github.io/" target="_blank">stillF&ensp;信柴柴，得第一</a>
+        </div>
+    </div>
+    <div class="ribbon" style="height:100%">
+        <div class="pure-g" style="margin:40px 20px 60px 20px" id="youtubePlayerDiv">
+            <div class="pure-u-1" style="margin-bottom:10px;">
+                <h2 style="font-weight: 400;letter-spacing: .1em;margin: 2em 0 0em;color: #fff;">
+                    Youtube播放
+                    <a href="https://github.com/stillF/YoutubePlayer" style="margin-left:5px;" target="_blank">
+                        <img style=" display:inline-block;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAA10lEQVRIie2VvQrCMBRGb8RXsLi4S5/A3cUn6YPawUFc7OBuQcRnEI5LhhSSNElroJBvzM937r25SUSKliigxa2LuXaVMa5DFgqwAe5myjmgFdBpXhcEBk5A7zkrm95A7YBWoeDnnFA9HgQeX2TfZ57pA9hGeaaAXZka8y1wnhXsKW8dE3wU2FVeYA+8/gL2lVc3XFyfhIB9jRQTfAr46mqkUI/Ut/orIjcROSqlPokeQ6Xe41iPnL9TARdwHq0tY72I7KZeKe3jlC3jZmxTILSZ6FG0cP0AVVbrVjgTPlIAAAAASUVORK5CYII=">
+                    </a>
+                </h2>
+                <hr />
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <div id="ytplayer"></div>
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2">
+                <form class="pure-form pure-form-stacked">
+                    <fieldset>
+                        <label style="color:#fff;">Id</label>
+                        <input type="text" v-model="youtubeId" />
+                        <label style="color:#fff;">
+                            起始時間
+                            <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setStartTimeHandler">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
+                            </button>
+                        </label>
+                        <input type="text" v-model="startTime" />
+                        <label style="color:#fff;">
+                            結束時間
+                            <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setEndTimeHandler">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
+                            </button>
+                        </label>
+                        <input type="text" v-model="endTime" />
+                        <button type="button" class="pure-button pure-input-1 pure-button-primary" v-on:click="getYoutubeHandler">go</button>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="content-wrapper" style="background-color:#2d3e50;">
+        <div class="footer l-box is-center">
+            © Copyright 2022. All Rights Reserved.
+        </div>
+    </div>
+    <script>
+        let vueApp = new Vue({
+            el: '#youtubePlayerDiv',
+            data: {
+                youtubeId: "1YgiJFAXZoE",
+                startTime: 215,
+                endTime: 449,
+                player: null,
+                isReady: false,
+            },
+            methods: {
+                initYoutubeHandler: function () {
+                    let playerConfig = {
+                        height: '360',
+                        width: '95%',
+                        videoId: this.youtubeId,
+                        playerVars: {
+                            autoplay: 1,
+                            controls: 1,
+                            showinfo: 0,
+                            modestbranding: 1,
+                            fs: 1,
+                            cc_load_policy: 0,
+                            iv_load_policy: 3,
+                            start: this.startTime,
+                            end: this.endTime,
+                            autohide: 0,
+                        },
+                        events: {
+                            'onReady': this.onReadyHandler,
+                            'onStateChange': this.onStateChangeHandler
+                        }
+                    };
+                    this.player = new YT.Player('ytplayer', playerConfig);
+                    //this.player.playVideo();
+                },
+                reloadYoutubeHandler: function () {
+                    this.player.loadVideoById({
+                        videoId: this.youtubeId,
+                        startSeconds: this.startTime,
+                        endSeconds: this.endTime
+                    });
+                },
+                getYoutubeHandler: function () {
+                    if (this.player === null) {
+                        this.initYoutubeHandler();
+                    } else {
+                        this.reloadYoutubeHandler();
+                    }
+                },
+                onReadyHandler: function () {
+                    this.isReady = true;
+                    //this.player.playVideo();
+                    //this.player.mute();
+                },
+                onStateChangeHandler: function (event) {
+                    if (event.data === YT.PlayerState.ENDED) {
+                        this.player.seekTo(this.startTime);
+                    }
+                },
+                setStartTimeHandler: function () {
+                    if (this.isReady) {
+                        this.startTime = parseInt(this.player.getCurrentTime());
+                    }
+                },
+                setEndTimeHandler: function () {
+                    if (this.isReady) {
+                        this.endTime = parseInt(this.player.getCurrentTime());
+                    }
+                },
+            },
+        });
+        function onYouTubeIframeAPIReady() {
+            vueApp.getYoutubeHandler();
+        }
+    </script>
+</body>
+</html>
