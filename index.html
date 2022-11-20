@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stillF&nbsp;-&nbsp;Youtube播放</title>
+    <title>stillF&nbsp;-&nbsp;Youtube播放器</title>
     <!--<link rel="stylesheet" href="./css/pure-min.css">
     <link rel="stylesheet" href="./css/grids-responsive-min.css">
     <link rel="stylesheet" href="./css/styles.css">
@@ -36,7 +36,7 @@
                 <div id="ytplayer"></div>
             </div>
             <div class="pure-u-1 pure-u-md-1-3">
-                <form class="pure-form pure-form-stacked">
+                <form class="pure-form pure-form-stacked" style="width:95%">
                     <fieldset>
                         <label style="color:#fff;">Id</label>
                         <input type="text" v-model="youtubeId" />
@@ -79,7 +79,7 @@
             methods: {
                 initYoutubeHandler: function () {
                     let playerConfig = {
-                        height: '480',
+                        height: '100%',
                         width: '95%',
                         videoId: this.youtubeId,
                         playerVars: {
