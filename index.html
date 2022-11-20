@@ -4,11 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stillF&nbsp;-&nbsp;Youtube播放</title>
-    <link rel="stylesheet" href="/YoutubePlayer/css/pure-min.css">
+    <link rel="stylesheet" href="./css/pure-min.css">
+    <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script type="text/javascript" src="./js/vue-min.js"></script>
+    <script type="text/javascript" src="./js/youtube-api.js"></script>
+    <!--<link rel="stylesheet" href="/YoutubePlayer/css/pure-min.css">
     <link rel="stylesheet" href="/YoutubePlayer/css/grids-responsive-min.css">
     <link rel="stylesheet" href="/YoutubePlayer/css/styles.css">
     <script type="text/javascript" src="/YoutubePlayer/js/vue-min.js"></script>
-    <script type="text/javascript" src="/YoutubePlayer/js/youtube-api.js"></script>
+    <script type="text/javascript" src="/YoutubePlayer/js/youtube-api.js"></script>-->
 </head>
 <body style="background-color:#2d3e50;">
     <div class="header">
@@ -27,10 +32,10 @@
                 </h2>
                 <hr />
             </div>
-            <div class="pure-u-1 pure-u-md-1-2">
+            <div class="pure-u-1 pure-u-md-2-3">
                 <div id="ytplayer"></div>
             </div>
-            <div class="pure-u-1 pure-u-md-1-2">
+            <div class="pure-u-1 pure-u-md-1-3">
                 <form class="pure-form pure-form-stacked">
                     <fieldset>
                         <label style="color:#fff;">Id</label>
@@ -74,7 +79,7 @@
             methods: {
                 initYoutubeHandler: function () {
                     let playerConfig = {
-                        height: '360',
+                        height: '480',
                         width: '95%',
                         videoId: this.youtubeId,
                         playerVars: {
