@@ -48,14 +48,14 @@
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
                             </button>
                         </label>
-                        <input type="text" v-model="startTime" />
+                        <input type="number" v-model="startTime" />
                         <label style="color:#fff;">
                             結束時間
                             <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setEndTimeHandler">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
                             </button>
                         </label>
-                        <input type="text" v-model="endTime" />
+                        <input type="number" v-model="endTime" />
                         <label style="color:#fff;">
                             <input type="checkbox" style="width:15px;" v-model="isLoop" /> 循環播放
                         </label>
