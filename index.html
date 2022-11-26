@@ -38,8 +38,10 @@
             <div class="pure-u-1 pure-u-md-1-3">
                 <form class="pure-form pure-form-stacked" style="width:95%">
                     <fieldset>
-                        <label style="color:#fff;">Id</label>
-                        <input type="text" v-model="youtubeId" />
+                        <!--<label style="color:#fff;">Id</label>
+                        <input type="text" v-model="youtubeId" />-->
+                        <label style="color:#fff;">網址</label>
+                        <input type="text" v-model="youtubeUrl" />
                         <label style="color:#fff;">
                             起始時間
                             <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setStartTimeHandler">
@@ -54,6 +56,12 @@
                             </button>
                         </label>
                         <input type="text" v-model="endTime" />
+                        <label style="color:#fff;">
+                            <input type="checkbox" style="width:15px;" v-model="isLoop" /> 循環播放
+                        </label>
+                        <label style="color:#fff;margin-top:0px;">
+                            <input type="checkbox" style="width:15px;" v-model="hasTimeRange" /> 鎖時間範圍
+                        </label>
                         <button type="button" class="pure-button pure-input-1 pure-button-primary" style="margin-top:10px;" v-on:click="getYoutubeHandler">送出</button>
                     </fieldset>
                 </form>
@@ -69,49 +77,91 @@
         let vueApp = new Vue({
             el: '#youtubePlayerDiv',
             data: {
+                youtubeUrl: "https://www.youtube.com/watch?v=1YgiJFAXZoE",
                 youtubeId: "1YgiJFAXZoE",
                 startTime: 215,
                 endTime: 450,
                 player: null,
+                isLoop: true,
+                hasTimeRange: true,
                 isReady: false,
             },
             methods: {
                 initYoutubeHandler: function () {
-                    let playerConfig = {
-                        height: '100%',
-                        width: '95%',
-                        videoId: this.youtubeId,
-                        playerVars: {
-                            autoplay: 1,
-                            controls: 1,
-                            showinfo: 0,
-                            modestbranding: 1,
-                            fs: 1,
-                            cc_load_policy: 0,
-                            iv_load_policy: 3,
-                            start: this.startTime,
-                            end: this.endTime,
-                            autohide: 0,
-                        },
-                        events: {
-                            'onReady': this.onReadyHandler,
-                            'onStateChange': this.onStateChangeHandler
-                        }
-                    };
-                    this.player = new YT.Player('ytplayer', playerConfig);
+                    if (this.hasTimeRange) {
+                        this.player = new YT.Player('ytplayer', {
+                            height: '100%',
+                            width: '95%',
+                            videoId: this.youtubeId,
+                            playerVars: {
+                                autoplay: 1,// 自動播放影片
+                                controls: 1, // 顯示播放器
+                                showinfo: 0,// 隱藏影片標題
+                                modestbranding: 0,// 隱藏YouTube Logo
+                                fs: 1, // 隱藏全螢幕按鈕
+                                cc_load_policy: 0,// 隱藏字幕
+                                iv_load_policy: 3,// 隱藏影片註解
+                                autohide: 0,// 影片播放時，隱藏影片控制列
+                                start: this.startTime,
+                                end: this.endTime,
+                            },
+                            events: {
+                                'onReady': this.onReadyHandler,
+                                'onStateChange': this.onStateChangeHandler
+                            }
+                        });
+                    } else {
+                        this.player = new YT.Player('ytplayer', {
+                            height: '100%',
+                            width: '95%',
+                            videoId: this.youtubeId,
+                            playerVars: {
+                                autoplay: 1,
+                                controls: 1,
+                                showinfo: 0,
+                                modestbranding: 0,
+                                fs: 1,
+                                cc_load_policy: 0,
+                                iv_load_policy: 3,
+                                autohide: 0,
+                            },
+                            events: {
+                                'onReady': this.onReadyHandler,
+                                'onStateChange': this.onStateChangeHandler
+                            }
+                        });
+                    }
                 },
                 reloadYoutubeHandler: function () {
-                    this.player.loadVideoById({
-                        videoId: this.youtubeId,
-                        startSeconds: this.startTime,
-                        endSeconds: this.endTime
-                    });
+                    if (this.hasTimeRange) {
+                        this.player.loadVideoById({
+                            videoId: this.youtubeId,
+                            startSeconds: this.startTime,
+                            endSeconds: this.endTime
+                        });
+                    } else {
+                        this.player.loadVideoById({
+                            videoId: this.youtubeId
+                        });
+                    }
+                },
+                getYoutubeIdByUrl: function () {
+                    const youtubeRegExp = /^(?:(?:https|http):\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be).*?(?:\/|v\/|u\/|embed\/|shorts\/|watch\?v=|(?<username>user\/))(?<id>[\w\-]{11})(?:\?|&|$)/;
+                    const match = this.youtubeUrl.match(youtubeRegExp);
+                    if (match ?.groups ?.username || !match ?.groups ?.id) {
+                        this.youtubeId = "1YgiJFAXZoE";
+                    } else {
+                        this.youtubeId = match.groups.id;
+                    }
                 },
                 getYoutubeHandler: function () {
+                    this.getYoutubeIdByUrl();
                     if (this.player === null) {
                         this.initYoutubeHandler();
+                        console.log("init");
                     } else {
                         this.reloadYoutubeHandler();
+                        console.log("reload");
                     }
                 },
                 onReadyHandler: function () {
@@ -120,8 +170,14 @@
                     //this.player.mute();
                 },
                 onStateChangeHandler: function (event) {
-                    if (event.data === YT.PlayerState.ENDED) {
-                        this.player.seekTo(this.startTime);
+                    if (this.isLoop) {
+                        if (event.data === YT.PlayerState.ENDED) {
+                            if (this.hasTimeRange) {
+                                this.player.seekTo(this.startTime);
+                            } else {
+                                this.player.seekTo(0);
+                            }
+                        }
                     }
                 },
                 setStartTimeHandler: function () {
