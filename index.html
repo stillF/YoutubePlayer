@@ -1,14 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stillF&nbsp;-&nbsp;Youtube播放器</title>
-    <!--<link rel="stylesheet" href="./css/pure-min.css">
+    <!-- <link rel="stylesheet" href="./css/pure-min.css">
     <link rel="stylesheet" href="./css/grids-responsive-min.css">
     <link rel="stylesheet" href="./css/styles.css">
     <script type="text/javascript" src="./js/vue-min.js"></script>
-    <script type="text/javascript" src="./js/youtube-api.js"></script>-->
+    <script type="text/javascript" src="./js/youtube-api.js"></script> -->
     <link rel="stylesheet" href="/YoutubePlayer/css/pure-min.css">
     <link rel="stylesheet" href="/YoutubePlayer/css/grids-responsive-min.css">
     <link rel="stylesheet" href="/YoutubePlayer/css/styles.css">
@@ -66,6 +66,16 @@
                     </fieldset>
                 </form>
             </div>
+            <div class="pure-u-1 pure-u-md-2-3" style="margin-bottom:10px;">
+                <form class="pure-form pure-form-stacked" style="width:95%">
+                    <fieldset>
+                        <label style="color:#fff;">跳轉檔廣告網址</label>
+                        <input type="text" v-model="blankUrl"/>
+                        <button type="button" class="pure-button pure-button-primary" style="margin-top:10px;" v-on:click="cleanBlankUrlHandler">清空</button>
+                        <button type="button" class="pure-button pure-button-primary" style="margin-top:10px;margin-left:5px;" v-on:click="checkBlankUrlHandler">送出</button>
+                    </fieldset>
+                </form>
+            </div>            
         </div>
     </div>
     <div style="background-color:#2d3e50;">
@@ -77,6 +87,8 @@
         let vueApp = new Vue({
             el: '#youtubePlayerDiv',
             data: {
+                blankUrl: "",
+                youtubeIdByblankUrl: "",
                 youtubeUrl: "https://www.youtube.com/watch?v=1YgiJFAXZoE",
                 youtubeId: "1YgiJFAXZoE",
                 startTime: 215,
@@ -188,6 +200,35 @@
                         this.endTime = parseInt(this.player.getCurrentTime());
                     }
                 },
+                cleanBlankUrlHandler: function () {
+                   this.blankUrl = "";
+                },
+                getYoutubeIdByBlankUrl: function () {
+                    this.youtubeIdByblankUrl = "";
+                    try {
+                        const urlObj = new URL(this.blankUrl);
+                        if (urlObj.hostname === "www.youtube.com" || urlObj.hostname === "youtube.com") {
+                            const params = new URLSearchParams(urlObj.search);
+                            const videoID = params.get("v");
+                            if (videoID) {
+                                this.youtubeIdByblankUrl = videoID;
+                            }
+                        }
+                    } catch (error) {
+                        // error
+                    }
+                },
+                checkBlankUrlHandler: function () {
+                    const trimmedURL = this.blankUrl.trim();
+                    if (trimmedURL !== "") {
+                        this.blankUrl = trimmedURL;
+                        this.getYoutubeIdByBlankUrl();
+                        if (this.youtubeIdByblankUrl !== "") {
+                            const resultUrl = `https://tv2.wfuapp.com/p/play-video.html?id=${this.youtubeIdByblankUrl}`;
+                            window.open(resultUrl, '_blank');
+                        }
+                    }
+                },                
             },
         });
         function onYouTubeIframeAPIReady() {
