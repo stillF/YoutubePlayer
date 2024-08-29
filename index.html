@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
     <script type="text/javascript" src="/YoutubePlayer/js/vue-min.js"></script>
     <script type="text/javascript" src="/YoutubePlayer/js/youtube-api.js"></script>
 </head>
+
 <body style="background-color:#2d3e50;">
     <div class="header">
         <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed" style="background: #111;text-align:left;">
@@ -27,7 +29,8 @@
                 <h2 style="font-weight: 400;letter-spacing: .1em;margin: 2em 0 0em;color: #fff;">
                     Youtube播放器
                     <a href="https://github.com/stillF/YoutubePlayer" target="_blank">
-                        <img style=" display:inline-block;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAA10lEQVRIie2VvQrCMBRGb8RXsLi4S5/A3cUn6YPawUFc7OBuQcRnEI5LhhSSNElroJBvzM937r25SUSKliigxa2LuXaVMa5DFgqwAe5myjmgFdBpXhcEBk5A7zkrm95A7YBWoeDnnFA9HgQeX2TfZ57pA9hGeaaAXZka8y1wnhXsKW8dE3wU2FVeYA+8/gL2lVc3XFyfhIB9jRQTfAr46mqkUI/Ut/orIjcROSqlPokeQ6Xe41iPnL9TARdwHq0tY72I7KZeKe3jlC3jZmxTILSZ6FG0cP0AVVbrVjgTPlIAAAAASUVORK5CYII=">
+                        <img style=" display:inline-block;vertical-align:middle;"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAA10lEQVRIie2VvQrCMBRGb8RXsLi4S5/A3cUn6YPawUFc7OBuQcRnEI5LhhSSNElroJBvzM937r25SUSKliigxa2LuXaVMa5DFgqwAe5myjmgFdBpXhcEBk5A7zkrm95A7YBWoeDnnFA9HgQeX2TfZ57pA9hGeaaAXZka8y1wnhXsKW8dE3wU2FVeYA+8/gL2lVc3XFyfhIB9jRQTfAr46mqkUI/Ut/orIjcROSqlPokeQ6Xe41iPnL9TARdwHq0tY72I7KZeKe3jlC3jZmxTILSZ6FG0cP0AVVbrVjgTPlIAAAAASUVORK5CYII=">
                     </a>
                 </h2>
                 <hr />
@@ -44,15 +47,19 @@
                         <input type="text" v-model="youtubeUrl" />
                         <label style="color:#fff;">
                             起始時間
-                            <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setStartTimeHandler">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
+                            <button type="button" class="pure-button pure-button-primary"
+                                style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setStartTimeHandler">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC"
+                                    style="width:15px;">
                             </button>
                         </label>
                         <input type="number" v-model="startTime" />
                         <label style="color:#fff;">
                             結束時間
-                            <button type="button" class="pure-button pure-button-primary" style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setEndTimeHandler">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC" style="width:15px;">
+                            <button type="button" class="pure-button pure-button-primary"
+                                style="padding: 0.4em 0.2em 0.2em 0.2em" v-on:click="setEndTimeHandler">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVRIie3Uv0qCYRQGcBWXKBO6hcqxoqVFGgzH7kjSpa4hCOoCglpdhOweAmtviMSIssZfg+8HX9L3J63NZznw8pznOX94T6GwwLxAE2cY4B1jPOACByjOKlxDXzb6qMXyOnnE9zEKAk9oYQfLWMMejmOcEeroQJ7Ko8RLVFK4VXQD9zNqKcugHxPPnC/KuI/PLI3cjI0lsfKpnM70UtLIZ4HTmlU8y2AQONt5DH4NvAWDlX8xmAdYDcW9xt9Lf+ixEeJjosFPC0M7p8FhiLeJjFnFTT7cc8hp5DUYoJxDvITrkNPLIkf4CLGLakblV4E7xHoeg7bJ4Yru0QtOsIUlVLCLo9hYhqhndfvt1GITNwmLj6OXWXmKYRENnIedjE0+4x1OUxe6QF58AV4VR/Mx+w3YAAAAAElFTkSuQmCC"
+                                    style="width:15px;">
                             </button>
                         </label>
                         <input type="number" v-model="endTime" />
@@ -62,7 +69,8 @@
                         <label style="color:#fff;margin-top:0px;">
                             <input type="checkbox" style="width:15px;" v-model="hasTimeRange" /> 鎖時間範圍
                         </label>
-                        <button type="button" class="pure-button pure-input-1 pure-button-primary" style="margin-top:10px;" v-on:click="getYoutubeHandler">送出</button>
+                        <button type="button" class="pure-button pure-input-1 pure-button-primary"
+                            style="margin-top:10px;" v-on:click="getYoutubeHandler">送出</button>
                     </fieldset>
                 </form>
             </div>
@@ -70,12 +78,29 @@
                 <form class="pure-form pure-form-stacked" style="width:95%">
                     <fieldset>
                         <label style="color:#fff;">跳轉檔廣告網址</label>
-                        <input type="text" v-model="blankUrl"/>
-                        <button type="button" class="pure-button pure-button-primary" style="margin-top:10px;" v-on:click="cleanBlankUrlHandler">清空</button>
-                        <button type="button" class="pure-button pure-button-primary" style="margin-top:10px;margin-left:5px;" v-on:click="checkBlankUrlHandler">送出</button>
+                        <input type="text" v-model="blankUrl" />
+                        <button type="button" class="pure-button pure-button-primary" style="margin-top:10px;"
+                            v-on:click="cleanBlankUrlHandler">清空</button>
+                        <button type="button" class="pure-button pure-button-primary"
+                            style="margin-top:10px;margin-left:5px;" v-on:click="checkBlankUrlHandler">送出</button>
+                        <hr>
+                        <a href="https://www.youtube.com/results?search_query=%E5%A1%94%E7%BE%85%E7%89%8C&sp=EgIIAg%253D%253D"
+                            target="_blank">
+                            <button type="button" class="pure-button pure-button-primary"
+                                style="margin-top:10px;">塔羅牌</button>
+                        </a>
+                        <a href="https://www.youtube.com/results?search_query=%E4%B8%80%E5%8F%A3%E6%B0%A3%E7%9C%8B&sp=EgIIBA%253D%253D"
+                            target="_blank">
+                            <button type="button" class="pure-button pure-button-primary"
+                                style="margin-top:10px;margin-left:5px;">一口氣看</button>
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=7wcQzKzFu2o" target="_blank">
+                            <button type="button" class="pure-button pure-button-primary"
+                                style="margin-top:10px;margin-left:5px;">超慢跑</button>
+                        </a>
                     </fieldset>
                 </form>
-            </div>            
+            </div>
         </div>
     </div>
     <div style="background-color:#2d3e50;">
@@ -160,7 +185,7 @@
                 getYoutubeIdByUrl: function () {
                     const youtubeRegExp = /^(?:(?:https|http):\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be).*?(?:\/|v\/|u\/|embed\/|shorts\/|watch\?v=|(?<username>user\/))(?<id>[\w\-]{11})(?:\?|&|$)/;
                     const match = this.youtubeUrl.match(youtubeRegExp);
-                    if (match ?.groups ?.username || !match ?.groups ?.id) {
+                    if (match?.groups?.username || !match?.groups?.id) {
                         this.youtubeId = "1YgiJFAXZoE";
                     } else {
                         this.youtubeId = match.groups.id;
@@ -201,7 +226,7 @@
                     }
                 },
                 cleanBlankUrlHandler: function () {
-                   this.blankUrl = "";
+                    this.blankUrl = "";
                 },
                 getYoutubeIdByBlankUrl: function () {
                     this.youtubeIdByblankUrl = "";
@@ -228,7 +253,7 @@
                             window.open(resultUrl, '_blank');
                         }
                     }
-                },                
+                },
             },
         });
         function onYouTubeIframeAPIReady() {
@@ -236,4 +261,5 @@
         }
     </script>
 </body>
+
 </html>
