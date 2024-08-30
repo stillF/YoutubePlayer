@@ -232,7 +232,7 @@
                     this.youtubeIdByblankUrl = "";
                     try {
                         const urlObj = new URL(this.blankUrl);
-                        if (urlObj.hostname === "www.youtube.com" || urlObj.hostname === "youtube.com") {
+                        if (urlObj.hostname === "www.youtube.com" || urlObj.hostname === "m.youtube.com") {
                             const params = new URLSearchParams(urlObj.search);
                             const videoID = params.get("v");
                             if (videoID) {
